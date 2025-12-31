@@ -44,21 +44,23 @@ services.displayManager.autoLogin.user = "infected";
 environment.systemPackages = with pkgs; [
   wireshark
   nmap
-  (perl.withPackages (p: [
-    p.IPCShareable
-    p.IOSocketSSL
-    p.DigestSHA3
-    p.NetDNS
-    p.NetServer
-  ]))
-  cmake
+  iptables
+(pkgs.python3.withPackages (python-pkgs: [
+      python-pkgs.netifaces
+      python-pkgs.setuptools
+      python-pkgs.cryptography
+      #python-pkgs.netfilterqueue
+      python-pkgs.dnslib
+      python-pkgs.dpkt
+      python-pkgs.pyopenssl
+      python-pkgs.pyftpdlib
+      python-pkgs.netifaces
+      python-pkgs.jinja2
+      python-pkgs.requests
 
-  swig
-  libnetfilter_queue
-  gnumake
-  gcc
-  pkg-config-unwrapped
-  libnfnetlink
+
+      ]))
+
 ];
 
     users.users.network = { isNormalUser = true; extraGroups = [ "wheel" ]; initialPassword = "pass"; };
